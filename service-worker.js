@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-globals */
 
-const CACHE_NAME = 'app-cache-v8';
+const CACHE_NAME = 'app-cache-v9';
 const urlsToCache = [
   'https://sasanabbasihernandez.github.io/react-app-sw/', // Raíz de la app
   'https://sasanabbasihernandez.github.io/react-app-sw/index.html', // Archivo principal

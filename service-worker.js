@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-globals */
 
-const CACHE_NAME = 'app-cache-v9';
+const CACHE_NAME = 'app-cache-v10';
 const urlsToCache = [
   'https://sasanabbasihernandez.github.io/react-app-sw/', // Raíz de la app
   'https://sasanabbasihernandez.github.io/react-app-sw/index.html', // Archivo principal
@@ -14,6 +14,7 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       console.log('[Service Worker] Cacheando archivos iniciales');
+      console.log(cache)
       return cache.addAll(urlsToCache);
     }).catch((error) => {
       console.error('[Service Worker] Error al cachear archivos iniciales:', error);

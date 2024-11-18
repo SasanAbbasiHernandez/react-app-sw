@@ -1,11 +1,13 @@
 /* eslint-disable no-restricted-globals */
 
-const CACHE_NAME = 'app-cache-v11';
+const CACHE_NAME = 'app-cache-v3';
 const urlsToCache = [
-  'https://sasanabbasihernandez.github.io/react-app-sw/', // Raíz de la app
-  'https://sasanabbasihernandez.github.io/react-app-sw/index.html', // Archivo principal
-  'https://sasanabbasihernandez.github.io/react-app-sw/static/js/main.js', // Archivos estáticos generados
-  'https://sasanabbasihernandez.github.io/react-app-sw/static/css/main.css', // Estilo generado
+  '/', // Raíz de la app
+  '/index.html', // Archivo principal
+  '/static/js/main.js', // Archivos estáticos generados
+  '/static/css/main.css', // Estilo generado
+  '/manifest.json', // Archivo de manifiesto
+  '/favicon.ico', // Ícono de la aplicación
   // Agrega aquí más rutas según las necesidades de tu app
 ];
 
@@ -14,19 +16,18 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       console.log('[Service Worker] Cacheando archivos iniciales');
-      console.log(cache)
-      return cache.addAll(urlsToCache);
-    }).catch((error) => {
-      console.error('[Service Worker] Error al cachear archivos iniciales:', error);
+      return cache.addAll(urlsToCache).catch((error) => {
+        console.error('[Service Worker] Error al cachear archivos iniciales:', error);
+      });
     })
   );
+  self.skipWaiting(); // Permite la activación inmediata
 });
 
 self.addEventListener('activate', (event) => {
   console.log('[Service Worker] Activando...');
   event.waitUntil(
     caches.keys().then((cacheNames) => {
-      console.log('[Service Worker] Cachés existentes:', cacheNames);
       return Promise.all(
         cacheNames.map((cacheName) => {
           if (cacheName !== CACHE_NAME) {
@@ -35,11 +36,9 @@ self.addEventListener('activate', (event) => {
           }
         })
       );
-    }).catch((error) => {
-      console.error('[Service Worker] Error al eliminar caché antigua:', error);
     })
   );
-  self.clients.claim();
+  return self.clients.claim(); // Reclama control de los clientes
 });
 
 self.addEventListener('fetch', (event) => {
@@ -47,16 +46,23 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request).then((response) => {
       if (response) {
-        console.log('[Service Worker] Respuesta desde caché:', event.request.url);
+        console.log('[Service Worker] Sirviendo desde caché:', event.request.url);
         return response;
       }
-      console.log('[Service Worker] Respuesta desde red:', event.request.url);
-      return fetch(event.request);
-    }).catch((error) => {
-      console.error('[Service Worker] Error en fetch:', error);
+      console.log('[Service Worker] Fetch desde la red:', event.request.url);
+      return fetch(event.request).then((networkResponse) => {
+        if (networkResponse && networkResponse.status === 200) {
+          caches.open(CACHE_NAME).then((cache) => {
+            console.log('[Service Worker] Cacheando nueva respuesta:', event.request.url);
+            cache.put(event.request, networkResponse.clone());
+          });
+        }
+        return networkResponse;
+      });
     })
   );
 });
+
 
 // Escuchar mensajes de la aplicación
 self.addEventListener('message', (event) => {

@@ -2,10 +2,10 @@
 
 const CACHE_NAME = 'app-cache-v9';
 const urlsToCache = [
-  `${process.env.PUBLIC_URL}/`,
-  `${process.env.PUBLIC_URL}/index.html`,
-  `${process.env.PUBLIC_URL}/static/js/main.js`,
-  `${process.env.PUBLIC_URL}/static/css/main.css`,
+  '${process.env.PUBLIC_URL}/', // Raíz de la app
+  'https://sasanabbasihernandez.github.io/react-app-sw/index.html', // Archivo principal
+  'https://sasanabbasihernandez.github.io/react-app-sw/static/js/main.js', // Archivos estáticos generados
+  'https://sasanabbasihernandez.github.io/react-app-sw/static/css/main.css', // Estilo generado
   // Agrega aquí más rutas según las necesidades de tu app
 ];
 

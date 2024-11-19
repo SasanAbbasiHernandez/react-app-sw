@@ -2,13 +2,13 @@
 
 const CACHE_NAME = 'app-cache-v5';
 const urlsToCache = [
-  './', // Raíz de la app
-  './index.html', // Archivo principal
-  './static/js/main.js', // Archivos estáticos generados
-  './static/css/main.css', // Estilo generado
-  './manifest.json', // Archivo de manifiesto
-  './favicon.ico', // Ícono de la aplicación
-  // Agrega aquí más rutas según las necesidades de tu app
+  // './', // Raíz de la app
+  // './index.html', // Archivo principal
+  // './static/js/main.js', // Archivos estáticos generados
+  // './static/css/main.css', // Estilo generado
+  // './manifest.json', // Archivo de manifiesto
+  // './favicon.ico', // Ícono de la aplicación
+  // // Agrega aquí más rutas según las necesidades de tu app
 ];
 
 self.addEventListener('install', (event) => {

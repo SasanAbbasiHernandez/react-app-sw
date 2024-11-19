@@ -1,13 +1,13 @@
 /* eslint-disable no-restricted-globals */
 
-const CACHE_NAME = 'app-cache-v3';
+const CACHE_NAME = 'app-cache-v4';
 const urlsToCache = [
-  '/', // Raíz de la app
-  '/index.html', // Archivo principal
-  '/static/js/main.js', // Archivos estáticos generados
-  '/static/css/main.css', // Estilo generado
-  '/manifest.json', // Archivo de manifiesto
-  '/favicon.ico', // Ícono de la aplicación
+  './', // Raíz de la app
+  './index.html', // Archivo principal
+  './static/js/main.js', // Archivos estáticos generados
+  './static/css/main.css', // Estilo generado
+  './manifest.json', // Archivo de manifiesto
+  './favicon.ico', // Ícono de la aplicación
   // Agrega aquí más rutas según las necesidades de tu app
 ];
 

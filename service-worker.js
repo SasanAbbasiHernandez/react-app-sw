@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-globals */
 
-const CACHE_NAME = 'app-cache-v6';
+const CACHE_NAME = 'app-cache-v7';
 const urlsToCache = [
   // './', // Raíz de la app
   // './index.html', // Archivo principal
